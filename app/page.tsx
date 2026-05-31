@@ -2,17 +2,73 @@ import DownloadButton from "@/components/DownloadButton";
 import PhoneMockup from "@/components/PhoneMockup";
 import Reveal from "@/components/Reveal";
 import {
+  ProfileScreen,
+  ExploreScreen,
+  WorkoutScreen,
+  DiscoverScreen,
+} from "@/components/AppScreens";
+import {
   ScaleIcon,
   SparkleIcon,
   PlayIcon,
   HeartIcon,
   BookIcon,
   ShieldIcon,
-  TrendIcon,
-  ClockIcon,
   ArrowRightIcon,
 } from "@/components/Icons";
 import { APP_VERSION, APK_SIZE } from "@/lib/config";
+
+/* Each entry pairs an app screen with the feature it showcases. */
+const showcases = [
+  {
+    eyebrow: "Explore",
+    title: "A workout for every mood and level",
+    desc: "Browse a categorised library of yoga, strength, cardio and tutorials. Filter by goal, see each session's duration and difficulty at a glance, and tap in whenever you're ready to move.",
+    bullets: [
+      "4 categories with quick filter chips",
+      "Real trainers, beginner to advanced",
+      "Duration & difficulty on every card",
+    ],
+    screen: <ExploreScreen />,
+    accent: "text-violet-300",
+  },
+  {
+    eyebrow: "Guided sessions",
+    title: "Press play and follow along",
+    desc: "Each workout opens to a clean detail view with the trainer, focus area, duration and a clear description — so you know exactly what you're getting into before you start.",
+    bullets: [
+      "Full session detail at a glance",
+      "Clear focus & difficulty tags",
+      "Trainer-led, distraction-free player",
+    ],
+    screen: <WorkoutScreen />,
+    accent: "text-coral",
+  },
+  {
+    eyebrow: "Discover",
+    title: "Health reads curated for you",
+    desc: "A handpicked feed of trustworthy articles on nutrition, heart health and lifestyle — chosen to match your journey and keep you learning between workouts.",
+    bullets: [
+      "Curated, credible sources",
+      "Bite-sized, easy to read",
+      "Fresh topics that match your goals",
+    ],
+    screen: <DiscoverScreen />,
+    accent: "text-emerald-300",
+  },
+  {
+    eyebrow: "Your profile",
+    title: "Your health story, all in one place",
+    desc: "See your BMI, body fat and key stats at a glance, update your details any time, and stay fully in control of your account with simple, transparent settings.",
+    bullets: [
+      "BMI, body fat & body metrics",
+      "Update details in a tap",
+      "Private & secure account controls",
+    ],
+    screen: <ProfileScreen />,
+    accent: "text-gold",
+  },
+];
 
 const features = [
   {
@@ -89,6 +145,9 @@ export default function Home() {
           <div className="hidden items-center gap-8 text-sm text-slate-300 md:flex">
             <a href="#features" className="transition hover:text-gold">
               Features
+            </a>
+            <a href="#screens" className="transition hover:text-gold">
+              Screens
             </a>
             <a href="#how" className="transition hover:text-gold">
               How it works
@@ -232,85 +291,70 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ---------- Workout categories highlight ---------- */}
-      <section className="mx-auto max-w-6xl px-5 py-20 md:py-28">
-        <div className="grid items-center gap-12 lg:grid-cols-2">
-          <Reveal>
-            <span className="text-sm font-semibold uppercase tracking-widest text-gold">
-              Guided workouts
-            </span>
-            <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
-              Train your way, at your level
-            </h2>
-            <p className="mt-4 text-slate-400">
-              From beginner yoga flows to advanced strength sessions and
-              high-intensity cardio — every workout shows its duration and
-              difficulty, so you can pick the perfect session for today.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              {[
-                { label: "Yoga", color: "bg-violet-500/15 text-violet-300 border-violet-400/30" },
-                { label: "Strength", color: "bg-coral/15 text-coral border-coral/30" },
-                { label: "Cardio", color: "bg-sky-500/15 text-sky-300 border-sky-400/30" },
-                { label: "Tutorials", color: "bg-emerald-500/15 text-emerald-300 border-emerald-400/30" },
-              ].map((c) => (
-                <span
-                  key={c.label}
-                  className={`rounded-full border px-4 py-1.5 text-sm font-medium ${c.color}`}
-                >
-                  {c.label}
-                </span>
-              ))}
-            </div>
-          </Reveal>
+      {/* ---------- Screen showcases (alternating, floating phones) ---------- */}
+      <section id="screens" className="border-t border-white/5">
+        <div className="mx-auto max-w-2xl px-5 pt-20 text-center md:pt-28">
+          <span className="text-sm font-semibold uppercase tracking-widest text-gold">
+            Take a look inside
+          </span>
+          <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
+            Beautifully simple, screen by screen
+          </h2>
+          <p className="mt-4 text-slate-400">
+            A quick tour of the app — every screen built for clarity and calm.
+          </p>
+        </div>
 
-          <Reveal delay={120} className="space-y-4">
-            {[
-              {
-                tag: "YOGA",
-                tagColor: "bg-violet-500 text-white",
-                title: "Morning Yoga Flow for Flexibility",
-                meta: "Beginner · 20:00",
-                trainer: "Priya Sharma",
-              },
-              {
-                tag: "STRENGTH",
-                tagColor: "bg-coral text-white",
-                title: "Full Body Strength — No Equipment",
-                meta: "Intermediate · 35:00",
-                trainer: "Arjun Mehta",
-              },
-              {
-                tag: "CARDIO",
-                tagColor: "bg-sky-500 text-white",
-                title: "HIIT Cardio Blast — 20 Minutes",
-                meta: "Intermediate · 20:00",
-                trainer: "Vikram Singh",
-              },
-            ].map((w) => (
+        <div className="mx-auto max-w-6xl space-y-24 px-5 py-20 md:space-y-32 md:py-24">
+          {showcases.map((s, i) => {
+            const flip = i % 2 === 1;
+            return (
               <div
-                key={w.title}
-                className="flex items-center gap-4 rounded-2xl border border-white/5 bg-navy-900/70 p-4 transition hover:border-gold/30"
+                key={s.title}
+                className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16"
               >
-                <div className="flex h-14 w-14 flex-none items-center justify-center rounded-xl bg-gold/15 text-gold">
-                  <PlayIcon className="h-6 w-6" />
-                </div>
-                <div className="min-w-0 flex-1">
+                {/* Copy */}
+                <Reveal className={flip ? "lg:order-2" : ""}>
                   <span
-                    className={`inline-block rounded px-2 py-0.5 text-[10px] font-bold ${w.tagColor}`}
+                    className={`text-sm font-semibold uppercase tracking-widest ${s.accent}`}
                   >
-                    {w.tag}
+                    {s.eyebrow}
                   </span>
-                  <p className="mt-1 truncate text-sm font-semibold text-white">
-                    {w.title}
+                  <h3 className="mt-3 text-2xl font-bold tracking-tight sm:text-3xl">
+                    {s.title}
+                  </h3>
+                  <p className="mt-4 leading-relaxed text-slate-400">
+                    {s.desc}
                   </p>
-                  <p className="flex items-center gap-1.5 text-xs text-slate-400">
-                    <ClockIcon className="h-3 w-3" /> {w.meta} · {w.trainer}
-                  </p>
-                </div>
+                  <ul className="mt-6 space-y-3">
+                    {s.bullets.map((b) => (
+                      <li
+                        key={b}
+                        className="flex items-center gap-3 text-sm text-slate-300"
+                      >
+                        <span className="flex h-5 w-5 flex-none items-center justify-center rounded-full bg-gold/15 text-[11px] font-bold text-gold">
+                          ✓
+                        </span>
+                        {b}
+                      </li>
+                    ))}
+                  </ul>
+                </Reveal>
+
+                {/* Floating phone */}
+                <Reveal
+                  delay={120}
+                  className={`flex justify-center ${
+                    flip ? "lg:order-1 lg:justify-start" : "lg:justify-end"
+                  }`}
+                >
+                  <div className="animate-float" style={{ animationDelay: `${i * 0.8}s` }}>
+                    {s.screen}
+                  </div>
+                </Reveal>
               </div>
-            ))}
-          </Reveal>
+            );
+          })}
         </div>
       </section>
 

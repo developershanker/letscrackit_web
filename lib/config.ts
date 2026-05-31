@@ -10,7 +10,8 @@
  *     NEXT_PUBLIC_APK_URL=https://downloads.letscrackit.app/letscrackit-v2.11.apk
  */
 export const APK_URL =
-  process.env.NEXT_PUBLIC_APK_URL ?? "/downloads/letscrackit-latest.apk";
+  process.env.NEXT_PUBLIC_APK_URL ??
+  "https://letscrackit-files.s3.ap-south-1.amazonaws.com/letscrackit-release.apk";
 
 export const APP_VERSION = process.env.NEXT_PUBLIC_APP_VERSION ?? "2.11 (13)";
 

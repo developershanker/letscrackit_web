@@ -7,6 +7,7 @@ import {
   WorkoutScreen,
   DiscoverScreen,
 } from "@/components/AppScreens";
+import { DemoPersonProvider } from "@/components/DemoPerson";
 import {
   ScaleIcon,
   SparkleIcon,
@@ -130,7 +131,8 @@ const stats = [
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen overflow-hidden bg-navy-950 text-slate-100">
+    <DemoPersonProvider>
+      <main className="relative min-h-screen overflow-hidden bg-navy-950 text-slate-100">
       {/* ---------- Nav ---------- */}
       <header className="sticky top-0 z-50 border-b border-white/5 bg-navy-950/80 backdrop-blur-lg">
         <nav className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
@@ -158,6 +160,7 @@ export default function Home() {
           </div>
           <DownloadButton
             label="Get the app"
+            location="nav"
             className="!px-4 !py-2.5 !text-sm"
           />
         </nav>
@@ -182,7 +185,7 @@ export default function Home() {
               steps, heart rate and sleep — all in one beautiful app.
             </p>
             <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row lg:justify-start">
-              <DownloadButton label="Download for Android" />
+              <DownloadButton label="Download for Android" location="hero" />
               <a
                 href="#features"
                 className="inline-flex items-center gap-2 text-sm font-semibold text-slate-300 transition hover:text-gold"
@@ -372,7 +375,7 @@ export default function Home() {
             healthier, stronger you. Free, fast and made with ❤️ for India.
           </p>
           <div className="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <DownloadButton label="Download APK" />
+            <DownloadButton label="Download APK" location="footer_cta" />
             <span className="text-xs text-slate-500">
               Android · {APK_SIZE} · v{APP_VERSION}
             </span>
@@ -406,6 +409,7 @@ export default function Home() {
           </p>
         </div>
       </footer>
-    </main>
+      </main>
+    </DemoPersonProvider>
   );
 }

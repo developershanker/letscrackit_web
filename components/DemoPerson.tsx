@@ -11,16 +11,17 @@ import {
 /**
  * Demo names for the app-screen mockups.
  *
- * The mockups are illustrative, so instead of a hardcoded name we fetch a
- * realistic, region-appropriate name from a public web API (randomuser.me,
- * `nat=in` to suit the "Healthy India" theme). This makes the demo feel alive
- * while staying fully synthetic — it is NOT the visitor's real identity, which
- * a static marketing page has no way to know.
+ * The mockups are illustrative, so instead of a single hardcoded name we pick a
+ * realistic, region-appropriate name from a built-in list (suited to the
+ * "Healthy India" theme). This makes the demo feel alive while staying fully
+ * synthetic and self-contained — no external API calls, so it always works
+ * regardless of network policy. It is NOT the visitor's real identity, which a
+ * static marketing page has no way to know.
  *
  * Resilience:
- *  - One shared fetch per page load (cached module-level promise).
- *  - Server renders the FALLBACK name; the fetched name swaps in on mount,
- *    so there is no hydration mismatch and it degrades gracefully offline.
+ *  - Server renders the FALLBACK name; a randomly-picked name swaps in on
+ *    mount, so there is no hydration mismatch.
+ *  - One name is chosen per page load and shared across every screen.
  */
 
 export interface DemoPerson {
@@ -29,59 +30,45 @@ export interface DemoPerson {
   email: string;
 }
 
-export const FALLBACK_PERSON: DemoPerson = {
-  first: "Aarav",
-  full: "Aarav Sharma",
-  email: "aarav.sharma@gmail.com",
-};
-
 function toEmail(full: string): string {
   return `${full.toLowerCase().replace(/\s+/g, ".")}@gmail.com`;
 }
 
-let cachedPromise: Promise<DemoPerson> | null = null;
+function makePerson(first: string, last: string): DemoPerson {
+  const full = `${first} ${last}`;
+  return { first, full, email: toEmail(full) };
+}
 
-/** Fetch a random realistic name once; reuse the same promise thereafter. */
-export function fetchDemoPerson(): Promise<DemoPerson> {
-  if (cachedPromise) return cachedPromise;
+/** Curated, region-appropriate demo names. */
+const FIRST_NAMES = [
+  "Aarav", "Priya", "Vihaan", "Ananya", "Arjun", "Diya", "Ishaan", "Saanvi",
+  "Kabir", "Aditi", "Reyansh", "Meera", "Vivaan", "Riya", "Aryan", "Kavya",
+  "Rohan", "Neha", "Dhruv", "Pooja",
+];
 
-  cachedPromise = (async () => {
-    try {
-      const res = await fetch(
-        "https://randomuser.me/api/?nat=in&inc=name&noinfo",
-        { cache: "force-cache" }
-      );
-      if (!res.ok) throw new Error(`status ${res.status}`);
-      const data = await res.json();
-      const name = data?.results?.[0]?.name;
-      if (!name?.first || !name?.last) throw new Error("malformed response");
+const LAST_NAMES = [
+  "Sharma", "Patel", "Reddy", "Iyer", "Nair", "Singh", "Gupta", "Mehta",
+  "Kapoor", "Rao", "Verma", "Joshi", "Desai", "Banerjee", "Chopra",
+];
 
-      const first = String(name.first);
-      const full = `${first} ${name.last}`;
-      return { first, full, email: toEmail(full) };
-    } catch {
-      // Any failure (offline, blocked, rate-limited) → safe fallback.
-      return FALLBACK_PERSON;
-    }
-  })();
+export const FALLBACK_PERSON: DemoPerson = makePerson("Aarav", "Sharma");
 
-  return cachedPromise;
+/** Pick one random realistic name from the built-in lists. */
+export function pickDemoPerson(): DemoPerson {
+  const first = FIRST_NAMES[Math.floor(Math.random() * FIRST_NAMES.length)];
+  const last = LAST_NAMES[Math.floor(Math.random() * LAST_NAMES.length)];
+  return makePerson(first, last);
 }
 
 const DemoPersonContext = createContext<DemoPerson>(FALLBACK_PERSON);
 
-/** Wrap the screens so they all share ONE fetched name. */
+/** Wrap the screens so they all share ONE randomly-picked name. */
 export function DemoPersonProvider({ children }: { children: ReactNode }) {
   const [person, setPerson] = useState<DemoPerson>(FALLBACK_PERSON);
 
   useEffect(() => {
-    let active = true;
-    fetchDemoPerson().then((p) => {
-      if (active) setPerson(p);
-    });
-    return () => {
-      active = false;
-    };
+    // Pick after mount so server and first client render match (no mismatch).
+    setPerson(pickDemoPerson());
   }, []);
 
   return (

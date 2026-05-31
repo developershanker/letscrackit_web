@@ -9,6 +9,7 @@ import {
   ShieldIcon,
 } from "./Icons";
 import PhoneFrame from "./PhoneFrame";
+import { DemoFullName, DemoEmail } from "./DemoPerson";
 
 /* Shared bottom navigation, with the active tab highlighted in gold. */
 function BottomNav({
@@ -36,8 +37,12 @@ export function ProfileScreen() {
     <PhoneFrame glowClassName="bg-gold/10">
       <div className="no-scrollbar h-full overflow-y-auto px-5 pb-20 pt-10 text-center">
         <div className="mx-auto h-20 w-20 rounded-full bg-gradient-to-br from-gold-400 to-coral ring-2 ring-gold/60" />
-        <p className="mt-3 text-lg font-bold text-white">Aarav Sharma</p>
-        <p className="text-[11px] text-slate-400">aarav.sharma@gmail.com</p>
+        <p className="mt-3 text-lg font-bold text-white">
+          <DemoFullName />
+        </p>
+        <p className="text-[11px] text-slate-400">
+          <DemoEmail />
+        </p>
 
         {/* BMI card */}
         <div className="mt-5 rounded-2xl border border-white/5 bg-navy-800 p-4">

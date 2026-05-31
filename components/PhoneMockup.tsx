@@ -9,6 +9,7 @@ import {
   UserIcon,
 } from "./Icons";
 import PhoneFrame from "./PhoneFrame";
+import { DemoFirstName, DemoFullName } from "./DemoPerson";
 
 /**
  * A CSS recreation of the Let's Crack It home screen, framed inside a phone
@@ -24,7 +25,7 @@ export default function PhoneMockup() {
               <div>
                 <p className="text-[11px] text-slate-400">Good Evening 👋</p>
                 <p className="text-lg font-bold leading-tight text-white">
-                  Aarav
+                  <DemoFirstName />
                 </p>
               </div>
             </div>
@@ -37,7 +38,7 @@ export default function PhoneMockup() {
                   <SparkleIcon className="h-3 w-3" /> Today&apos;s Focus
                 </span>
                 <p className="mt-2 text-sm font-bold text-white">
-                  Hello Aarav Sharma!
+                  Hello <DemoFullName />!
                 </p>
                 <p className="text-[11px] text-slate-400">
                   Welcome to Lets Crack it!!!

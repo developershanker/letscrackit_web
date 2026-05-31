@@ -8,6 +8,7 @@ import {
   PlayIcon,
   UserIcon,
 } from "./Icons";
+import PhoneFrame from "./PhoneFrame";
 
 /**
  * A CSS recreation of the Let's Crack It home screen, framed inside a phone
@@ -15,13 +16,8 @@ import {
  */
 export default function PhoneMockup() {
   return (
-    <div className="relative mx-auto w-[290px] select-none">
-      {/* Phone shell */}
-      <div className="relative rounded-[2.8rem] border border-white/10 bg-navy-950 p-2.5 shadow-phone ring-1 ring-white/5">
-        {/* Notch */}
-        <div className="absolute left-1/2 top-2.5 z-20 h-5 w-28 -translate-x-1/2 rounded-b-2xl bg-navy-950" />
-        <div className="relative h-[600px] overflow-hidden rounded-[2.2rem] bg-navy-900">
-          <div className="no-scrollbar h-full overflow-y-auto px-4 pb-20 pt-9">
+    <PhoneFrame>
+      <div className="no-scrollbar h-full overflow-y-auto px-4 pb-20 pt-9">
             {/* Greeting */}
             <div className="flex items-center gap-3">
               <div className="h-10 w-10 rounded-full bg-gradient-to-br from-gold-400 to-coral" />
@@ -118,19 +114,14 @@ export default function PhoneMockup() {
             </div>
           </div>
 
-          {/* Bottom nav */}
-          <div className="absolute inset-x-0 bottom-0 flex items-center justify-around border-t border-white/5 bg-navy-950/95 px-6 py-3 backdrop-blur">
-            <HomeIcon className="h-5 w-5 text-gold" />
-            <TargetIcon className="h-5 w-5 text-slate-500" />
-            <PlayIcon className="h-5 w-5 text-slate-500" />
-            <UserIcon className="h-5 w-5 text-slate-500" />
-          </div>
-        </div>
+      {/* Bottom nav */}
+      <div className="absolute inset-x-0 bottom-0 flex items-center justify-around border-t border-white/5 bg-navy-950/95 px-6 py-3 backdrop-blur">
+        <HomeIcon className="h-5 w-5 text-gold" />
+        <TargetIcon className="h-5 w-5 text-slate-500" />
+        <PlayIcon className="h-5 w-5 text-slate-500" />
+        <UserIcon className="h-5 w-5 text-slate-500" />
       </div>
-
-      {/* Floating glow behind phone */}
-      <div className="absolute -inset-6 -z-10 rounded-[3rem] bg-gold/10 blur-3xl" />
-    </div>
+    </PhoneFrame>
   );
 }
 

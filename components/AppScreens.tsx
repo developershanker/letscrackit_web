@@ -82,7 +82,7 @@ export function ProfileScreen() {
           ))}
         </div>
 
-        <p className="mt-5 text-[10px] text-slate-500">v2.11 (13)</p>
+        <p className="mt-5 text-[10px] text-slate-500">v2.13 (15)</p>
         <p className="text-[11px] text-slate-400">Made for Healthy India ❤️</p>
       </div>
       <BottomNav active="profile" />

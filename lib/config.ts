@@ -7,13 +7,13 @@
  *   NEXT_PUBLIC_APK_URL (e.g. in .env.local or your hosting dashboard).
  *
  *   Example:
- *     NEXT_PUBLIC_APK_URL=https://downloads.letscrackit.app/letscrackit-v2.11.apk
+ *     NEXT_PUBLIC_APK_URL=https://downloads.letscrackit.app/letscrackit-v2.13.apk
  */
 export const APK_URL =
   process.env.NEXT_PUBLIC_APK_URL ??
   "https://letscrackit-files.s3.ap-south-1.amazonaws.com/letscrackit-release.apk";
 
-export const APP_VERSION = process.env.NEXT_PUBLIC_APP_VERSION ?? "2.11 (13)";
+export const APP_VERSION = process.env.NEXT_PUBLIC_APP_VERSION ?? "2.13 (15)";
 
 /** File name suggested to the browser when the APK is saved. */
 export const APK_FILE_NAME = "letscrackit.apk";
